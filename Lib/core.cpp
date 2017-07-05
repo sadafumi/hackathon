@@ -36,6 +36,8 @@ D3DCOLOR                DirectX::bgColor;
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 void DirectX::Init(LPSTR Caption, COORD Size)
 {
+	//ランダムシード初期化
+	(unsigned)time(NULL);
 	//Window
 	ZeroMemory(&DirectX::msg, sizeof(DirectX::msg));
 	DirectX::Caption = Caption;
@@ -117,10 +119,15 @@ void DirectX::Init(LPSTR Caption, COORD Size)
 	DirectX::pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
 	ShowWindow(DirectX::hWnd, SW_SHOW);
+
+	Texture::Init();
+	Object::InitAll();
 }
 
 void DirectX::Init(LPSTR Caption, SHORT Width, SHORT Height)
 {
+	//ランダムシード初期化
+	(unsigned)time(NULL);
 	COORD Size = { Width, Height };
 	//Window
 	ZeroMemory(&DirectX::msg, sizeof(DirectX::msg));
@@ -203,6 +210,9 @@ void DirectX::Init(LPSTR Caption, SHORT Width, SHORT Height)
 	DirectX::pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 
 	ShowWindow(DirectX::hWnd, SW_SHOW);
+
+	Texture::Init();
+	Object::InitAll();
 }
 
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+

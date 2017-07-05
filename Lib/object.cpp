@@ -18,11 +18,11 @@ pPrimitive pr[OBJECT_MAX] = {};
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|
 // ê√ìIä÷êî
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|
-void Object::Init(void)
+void Object::InitAll(void)
 {
 	for (int n = 0; n < OBJECT_MAX; n++)
 	{
-		Object::Objects[n] = NULL;
+		Object::Objects[n]->Init();
 	}
 }
 
@@ -111,8 +111,20 @@ Object::~Object(void)
 	}
 }
 
+void Object::Init(void)
+{
+
+}
+
 void Object::Update(void)
 {
+
+}
+
+void Object::UpdateThis(void)
+{
+	this->Update();
+
 	//ãÛÇ»ÇÁèIóπ
 	if (this == nullptr) return;
 	

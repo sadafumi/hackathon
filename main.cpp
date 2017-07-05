@@ -7,7 +7,7 @@
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #include "main.h"
 
-INT WINAPI WinMain(MAIN_PARAM)
+MAIN(MAIN_PARAM)
 {
 	//初期化
 	Init();
@@ -21,12 +21,8 @@ INT WINAPI WinMain(MAIN_PARAM)
 
 void Init(void)
 {
-	//ランダムシード初期化
-	(unsigned)time(NULL);
 	//DirectX初期化
-	DirectX::Init("げーむたいとる。", Coord(SCREEN_WIDTH, SCREEN_HEIGHT));
-	//テクスチャ読込
-	Texture::Init();
+	DirectX::Init("げーむたいとる。", SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 bool Update(void)

@@ -73,7 +73,7 @@ public:
 	static Object * Objects[OBJECT_MAX];
 	static bool AutoUpdate;
 	static bool AutoDraw;
-	static void Init(void);
+	static void InitAll(void);
 	static void DrawAll(void);
 	static void UnInit(void);
 	static void UpdateAll(void);
@@ -85,16 +85,19 @@ public:
 
 	virtual void Draw(void);
 
-	TEXTURE_NUM GetTexture(void);
-	float       GetPattern(void);
-	VECTOR3     GetPosition(void);
-	VECTOR2     GetScale(void);
-	D3DCOLOR    GetColor(void);
-	BOOL2       GetMirror(void);
-	float       GetAngle(void);
-	VECTOR2     GetScroll(void);
-	int         GetTimer(void);
-	void        Update(void);
+	TEXTURE_NUM  GetTexture(void);
+	float        GetPattern(void);
+	VECTOR3      GetPosition(void);
+	VECTOR2      GetScale(void);
+	D3DCOLOR     GetColor(void);
+	BOOL2        GetMirror(void);
+	float        GetAngle(void);
+	VECTOR2      GetScroll(void);
+	int          GetTimer(void);
+
+	virtual void Init(void);
+	void         UpdateThis(void);
+	virtual void Update(void);
 
 	void SetTexture(TEXTURE_NUM Num);
 	void SetPattern(float Pattern);
