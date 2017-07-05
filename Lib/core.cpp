@@ -119,6 +119,92 @@ void DirectX::Init(LPSTR Caption, COORD Size)
 	ShowWindow(DirectX::hWnd, SW_SHOW);
 }
 
+void DirectX::Init(LPSTR Caption, SHORT Width, SHORT Height)
+{
+	COORD Size = { Width, Height };
+	//Window
+	ZeroMemory(&DirectX::msg, sizeof(DirectX::msg));
+	DirectX::Caption = Caption;
+	DirectX::wndClass.cbSize = sizeof(WNDCLASSEX);
+	DirectX::wndClass.style = CS_HREDRAW | CS_VREDRAW;
+	DirectX::wndClass.lpfnWndProc = WndProc;
+	DirectX::wndClass.cbClsExtra = NULL;
+	DirectX::wndClass.cbWndExtra = NULL;
+	DirectX::wndClass.hInstance = DirectX::hInstance;
+	DirectX::wndClass.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	DirectX::wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	DirectX::wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	DirectX::wndClass.lpszMenuName = NULL;
+	DirectX::wndClass.lpszClassName = "WndClass";
+	DirectX::wndClass.hIconSm = LoadIcon(NULL, IDI_ASTERISK);
+
+	RegisterClassEx(&DirectX::wndClass);
+
+	RECT WindowRect = {
+		0, 0, (LONG)Size.X, (LONG)Size.Y
+	};
+	AdjustWindowRect(&WindowRect, WS_OVERLAPPEDWINDOW, false);
+	DirectX::Size.X = (SHORT)(WindowRect.right - WindowRect.left);
+	DirectX::Size.Y = (SHORT)(WindowRect.bottom - WindowRect.top);
+	RECT DeskRect;
+	GetWindowRect(GetDesktopWindow(), &DeskRect);
+	int newPosX = (DeskRect.right - DirectX::Size.X) / 2;
+	int newPosY = (DeskRect.bottom - DirectX::Size.Y) / 2;
+	DirectX::hWnd = CreateWindowEx(0, "WndClass", DirectX::Caption, WS_OVERLAPPEDWINDOW ^ (WS_MAXIMIZEBOX | WS_THICKFRAME),
+		newPosX, newPosY, Size.X, Size.Y, NULL, NULL, DirectX::hInstance, NULL);
+
+	UpdateWindow(DirectX::hWnd);
+
+	//DirectX
+	//「Direct3D」オブジェクトの作成
+	if (NULL == (DirectX::pD3d = Direct3DCreate9(D3D_SDK_VERSION)))
+	{
+		MessageBox(0, "Direct3Dの作成に失敗しました", "", MB_OK);
+		return;
+	}
+
+	//「DIRECT3Dデバイス」オブジェクトの作成
+	ZeroMemory(&d3dpp, sizeof(d3dpp));
+
+	d3dpp.BackBufferFormat = D3DFMT_UNKNOWN;
+	d3dpp.BackBufferCount = 1;
+	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
+	d3dpp.Windowed = true;
+	//d3dpp.EnableAutoDepthStencil = TRUE;
+	//d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
+
+	if (FAILED(DirectX::pD3d->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, DirectX::hWnd,
+		D3DCREATE_HARDWARE_VERTEXPROCESSING,
+		&d3dpp, &DirectX::pDevice)))
+	{
+		MessageBox(0, "DIRECT3Dデバイスの作成に失敗しました", NULL, MB_OK);
+		return;
+	}
+
+	// 2D描画用射影変換行列
+	//DirectX::pDevice->SetRenderState(D3DRS_ZENABLE, true);
+	DirectX::pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
+	DirectX::pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	DirectX::pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	DirectX::pDevice->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+
+	DirectX::pDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	DirectX::pDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+	DirectX::pDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+	DirectX::pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
+	DirectX::pDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+	DirectX::pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
+
+	DirectX::pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+	DirectX::pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+
+	DirectX::pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+	DirectX::pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+	DirectX::pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+
+	ShowWindow(DirectX::hWnd, SW_SHOW);
+}
+
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 // 関数名: 更新
 // 引数：なし

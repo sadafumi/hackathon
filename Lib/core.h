@@ -14,6 +14,7 @@
 #include <tchar.h>   //tChar
 #include <stdio.h>   //入出力ライブラリ
 #include <time.h>    //時間ライブラリ
+
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 // ライブラリファイル
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -28,6 +29,8 @@
 // 警告
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #pragma warning(disable: 4996)
+#pragma warning(disable: 4100)
+#pragma warning(disable: 4458)
 
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 // マクロ定義
@@ -103,6 +106,7 @@ public:
 	static D3DCOLOR                bgColor;
 
 	static void Init(LPSTR Caption, COORD Size);
+	static void Init(LPSTR Caption, SHORT Width, SHORT Height);
 	static bool Update(void);
 	static void UnInit(void);
 
