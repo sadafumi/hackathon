@@ -83,7 +83,6 @@ typedef struct BOOL2
 #include "texture.h"
 #include "object.h"
 #include "primitive.h"
-#include "../Player.h"
 
 typedef class DirectX
 {

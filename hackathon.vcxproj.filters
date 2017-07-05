@@ -1,17 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="ライブラリ">
+      <UniqueIdentifier>{06fa78a3-356e-40b3-b401-0e9201990acc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="フラ">
+      <UniqueIdentifier>{2ac7716f-daab-4c4f-9bc7-ed69b686dd3a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="橋本">
+      <UniqueIdentifier>{38d2656b-479a-44e7-9d06-828c3e1ffae4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="宗貞">
+      <UniqueIdentifier>{410d829a-0f1f-438e-9cad-3a1cbc8b607a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ユウちゃん">
+      <UniqueIdentifier>{cef10c6a-5932-4c24-af8a-b5b7ba05a2ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="佐々木">
+      <UniqueIdentifier>{389f20ac-0749-4ab5-9cb1-6c9194852774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="メイン">
+      <UniqueIdentifier>{5602bc28-4d12-416c-9507-06dc8b3c8669}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Lib\camera.h">
+      <Filter>ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\core.h">
+      <Filter>ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\input.h">
+      <Filter>ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\object.h">
+      <Filter>ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\primitive.h">
+      <Filter>ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="Lib\texture.h">
+      <Filter>ライブラリ</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>メイン</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Lib\core.cpp">
+      <Filter>ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\input.cpp">
+      <Filter>ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\object.cpp">
+      <Filter>ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\primitive.cpp">
+      <Filter>ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\texture.cpp">
+      <Filter>ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="Lib\camera.cpp">
+      <Filter>ライブラリ</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>メイン</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
