@@ -10,9 +10,9 @@ void Player::Init(void)
 void Player::Update(void)
 {
 	if (Input::uKeys['W'])
-		this->Move(Vector3(0.0f, -1.0f, 0.0f));
+		this->Move(Vector3(0.0f, -0.5f, 0.0f));
 	if (Input::uKeys['S'])
-		this->Move(Vector3(0.0f, 1.0f, 0.0f));
+		this->Move(Vector3(0.0f, 0.5f, 0.0f));
 	if (Input::uKeys['A'])
 		this->UpdateAngle(-1.0f);
 	if (Input::uKeys['D'])

@@ -10,6 +10,7 @@
 // インクルードファイル
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 #include <windows.h> //Windowsライブラリ
+#include <d3d9.h>    //DirectX
 #include <d3dx9.h>   //DirectX
 #include <tchar.h>   //tChar
 #include <stdio.h>   //入出力ライブラリ
