@@ -22,7 +22,8 @@ void Object::InitAll(void)
 {
 	for (int n = 0; n < OBJECT_MAX; n++)
 	{
-		Object::Objects[n]->Init();
+		if(Object::Objects[n] != NULL)
+			Object::Objects[n]->Init();
 	}
 }
 
@@ -44,7 +45,7 @@ void Object::UpdateAll(void)
 	{
 		if (Object::Objects[n] != NULL)
 		{
-			Object::Objects[n]->Update();
+			Object::Objects[n]->UpdateThis();
 		}
 	}
 }

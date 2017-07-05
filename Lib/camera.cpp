@@ -14,7 +14,7 @@
 VECTOR3  Camera::Position = Vector3(0.0f, 0.0f, 0.0f);
 VECTOR2  Camera::Zoom = Vector2(1.0f, 1.0f);
 float    Camera::Angle = 0;
-D3DCOLOR Camera::Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.9f);
+D3DCOLOR Camera::Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 //-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 // ê√ìIä÷êî
