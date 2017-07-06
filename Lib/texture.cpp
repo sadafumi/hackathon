@@ -91,7 +91,6 @@ void Texture::Draw(VECTOR3 Pos, VECTOR2 Scale, D3DCOLOR Color, float Pattern)
 		Color = newColor;
 
 	VECTOR2 Size = {};
-	int n = 0;
 	COORD Div = {};
 	UINT _Pattern = (UINT)Pattern;
 	float a = 0;
