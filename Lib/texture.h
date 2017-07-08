@@ -42,6 +42,7 @@ public:
 	static VECTOR2 CutSize;
 	static VECTOR2 Scroll;
 	static bool    LockPosition;
+	static bool    LockColor;
 
 	LPDIRECT3DTEXTURE9 pTex;
 	VECTOR2            Size;

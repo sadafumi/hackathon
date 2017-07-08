@@ -108,6 +108,7 @@ public:
 	void SetAngle(float Angle);
 	void SetScroll(VECTOR2 Scroll);
 	void SetLockPosition(bool LockPosition);
+	void SetLockColor(bool LockColor);
 	void SetAll(TEXTURE_NUM Num, float Pattern, VECTOR3 Position, VECTOR2 Scale, D3DCOLOR Color, BOOL2 Mirror);
 	void UpdatePattern(float Pattern);
 	void UpdatePosition(VECTOR3 Position);
@@ -138,8 +139,10 @@ protected:
 	VECTOR2        CutPosition, CutSize;
 	VECTOR2        Scroll;
 	bool           LockPosition;
+	bool           LockColor;
 				   		  
 	int            Timer;
+	float          Gravity;
 } *pObject;
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|
