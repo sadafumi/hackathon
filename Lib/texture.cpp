@@ -18,6 +18,7 @@ VECTOR2	 Texture::CutPosition = Vector2(0, 0);
 VECTOR2	 Texture::CutSize = Vector2(0, 0);
 VECTOR2  Texture::Scroll = Vector2(0, 0);
 bool     Texture::LockPosition = false;
+bool     Texture::LockColor = false;
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|
 // ê√ìIä÷êî
@@ -80,18 +81,21 @@ void Texture::Draw(VECTOR3 Pos, VECTOR2 Scale, D3DCOLOR Color, float Pattern)
 		Pos.y -= Camera::Position.y;
 		Pos.z -= Camera::Position.z;
 	}
-		Scale.x *= Camera::Zoom.x;
-		Scale.y *= Camera::Zoom.y;
-		Texture::Angle += Camera::Angle;
 
+	Scale.x *= Camera::Zoom.x;
+	Scale.y *= Camera::Zoom.y;
+	Texture::Angle += Camera::Angle;
+
+	if (!Texture::LockColor)
+	{
 		D3DXCOLOR newColor;
 		D3DXCOLOR OldColor = Color;
 		D3DXCOLOR CameraColor = Camera::Color;
 		D3DXColorModulate(&newColor, &OldColor, &CameraColor);
 		Color = newColor;
+	}
 
 	VECTOR2 Size = {};
-	int n = 0;
 	COORD Div = {};
 	UINT _Pattern = (UINT)Pattern;
 	float a = 0;

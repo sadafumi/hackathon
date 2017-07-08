@@ -22,7 +22,7 @@ void Object::InitAll(void)
 {
 	for (int n = 0; n < OBJECT_MAX; n++)
 	{
-		if(Object::Objects[n] != NULL)
+		if (Object::Objects[n] != NULL)
 			Object::Objects[n]->Init();
 	}
 }
@@ -48,6 +48,9 @@ void Object::UpdateAll(void)
 			Object::Objects[n]->UpdateThis();
 		}
 	}
+	char c[256];
+	sprintf(c, "%d, %d", Input::MousePos.X, Input::MousePos.Y);
+	SetWindowText(DirectX::hWnd, c);
 }
 
 void Object::DrawAll(void)
@@ -58,7 +61,7 @@ void Object::DrawAll(void)
 		{
 			if (Object::Objects[n] != NULL)
 			{
-				if((int)(Object::Objects[n]->GetPosition().z) == z)
+				if ((int)(Object::Objects[n]->GetPosition().z) == z)
 					Object::Objects[n]->Draw();
 			}
 		}
@@ -95,6 +98,7 @@ Object::Object(void)
 	this->Inertia.v3 = Vector3(0, 0, 0);
 	this->Inertia.Angle = 0;
 	this->LockPosition = false;
+	this->LockColor = false;
 	this->Size = Vector2(1.0f, 1.0f);
 	this->Timer = 0;
 	this->Limit.Type = LIMIT_NONE;
@@ -130,7 +134,7 @@ void Object::UpdateThis(void)
 
 	//空なら終了
 	if (this == nullptr) return;
-	
+
 	//カウンター更新
 	if (this->Timer)
 		this->Timer--;
@@ -159,48 +163,35 @@ void Object::UpdateThis(void)
 	this->Inertia.v3.y *= this->Inertia.Force;
 	this->Inertia.v3.z *= this->Inertia.Force;
 	this->Inertia.Angle *= this->Inertia.Force;
-	
+
 	//移動制限
 	this->SetLimit();
-
-#ifdef _DEBUG
-	//当たり範囲描画設定更新
-	if (this->HitBox.Type != HITBOX_NONE)
-	{
-		if (pr[this->x] == NULL)
-		{
-			pr[this->x] = new Primitive(PRIMITIVE_OPEN, 12);
-		}
-		pr[this->x]->SetPosition(this->Position);
-		pr[this->x]->SetScale(Vector2(this->Size.x * this->HitBox.Scale.x, this->Size.y * this->HitBox.Scale.y));
-		pr[this->x]->SetColor(this->Color);
-	}
-#endif
 }
 
 void Object::Draw(void)
 {
 	if (this->Num > TEXTURE_EMPTY)
-		if(Texture::Textures[this->Num].pTex != NULL)
-	{
-		//カット処理
-		Texture::CutPosition = this->CutPosition;
-		Texture::CutSize = this->CutSize;
-		//スクロール処理
-		Texture::Scroll = this->Scroll;
-		//ミラー設定
-		Texture::Mirror = this->Mirror;
-		//角度設定
-		Texture::Angle = this->Angle;
-		//ロック設定
-		Texture::LockPosition = this->LockPosition;
+		if (Texture::Textures[this->Num].pTex != NULL)
+		{
+			//カット処理
+			Texture::CutPosition = this->CutPosition;
+			Texture::CutSize = this->CutSize;
+			//スクロール処理
+			Texture::Scroll = this->Scroll;
+			//ミラー設定
+			Texture::Mirror = this->Mirror;
+			//角度設定
+			Texture::Angle = this->Angle;
+			//ロック設定
+			Texture::LockPosition = this->LockPosition;
+			Texture::LockColor = this->LockColor;
 
-		//描画
-		Texture::Textures[this->Num].Draw(
-			this->Position, this->Scale,
-			this->Color, this->Pattern
-		);
-	}
+			//描画
+			Texture::Textures[this->Num].Draw(
+				this->Position, this->Scale,
+				this->Color, this->Pattern
+			);
+		}
 }
 
 TEXTURE_NUM Object::GetTexture(void)
@@ -283,6 +274,11 @@ void Object::SetLockPosition(bool LockPosition)
 	this->LockPosition = LockPosition;
 }
 
+void Object::SetLockColor(bool LockColor)
+{
+	this->LockColor = LockColor;
+}
+
 void Object::SetAll(TEXTURE_NUM Num, float Pattern, VECTOR3 Position, VECTOR2 Scale, D3DCOLOR Color, BOOL2 Mirror)
 {
 	this->Num = Num;
@@ -339,25 +335,25 @@ bool Object::CheckCollision(Object * Obj)
 		return false;
 	switch (this->HitBox.Type)
 	{
-		case HITBOX_RECT:
+	case HITBOX_RECT:
+	{
+		if (fabs(this->Position.x - Obj->Position.x) < this->Size.x / 2.0f * this->HitBox.Scale.x + Obj->Size.x / 2.0f * Obj->HitBox.Scale.x
+			&&
+			fabs(this->Position.y - Obj->Position.y) < this->Size.y / 2.0f * this->HitBox.Scale.y + Obj->Size.y / 2.0f * Obj->HitBox.Scale.y)
 		{
-			if (fabs(this->Position.x - Obj->Position.x) < this->Size.x / 2.0f * this->HitBox.Scale.x + Obj->Size.x / 2.0f * Obj->HitBox.Scale.x
-				&&
-				fabs(this->Position.y - Obj->Position.y) < this->Size.y / 2.0f * this->HitBox.Scale.y + Obj->Size.y / 2.0f * Obj->HitBox.Scale.y)
-			{
-				return true;
-			}
+			return true;
 		}
-		break;
-		case HITBOX_CIRCLE:
-		{
-			float r1 = SQRT(this->Size.x / 2.0f * this->HitBox.Scale.x, this->Size.y / 2.0f * this->HitBox.Scale.y);
-			float r2 = SQRT(Obj->Size.x / 2.0f * Obj->HitBox.Scale.x, Obj->Size.y / 2.0f * Obj->HitBox.Scale.y);
-			float dif = SQRT(fabs(this->Position.x - Obj->Position.x), fabs(this->Position.y - Obj->Position.y));
-			if (dif < r1 + r2)
-				return true;
-		}
-		break;
+	}
+	break;
+	case HITBOX_CIRCLE:
+	{
+		float r1 = SQRT(this->Size.x / 2.0f * this->HitBox.Scale.x, this->Size.y / 2.0f * this->HitBox.Scale.y);
+		float r2 = SQRT(Obj->Size.x / 2.0f * Obj->HitBox.Scale.x, Obj->Size.y / 2.0f * Obj->HitBox.Scale.y);
+		float dif = SQRT(fabs(this->Position.x - Obj->Position.x), fabs(this->Position.y - Obj->Position.y));
+		if (dif < r1 + r2)
+			return true;
+	}
+	break;
 	}
 
 	return false;
