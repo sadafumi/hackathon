@@ -140,6 +140,7 @@ protected:
 	bool           LockPosition;
 				   		  
 	int            Timer;
+	float          Gravity;
 } *pObject;
 
 //+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+|

@@ -80,9 +80,10 @@ Object::Object(void)
 		}
 	}
 
+	this->ObjectType = OBJ_TEXTURE;
 	this->Num = TEXTURE_EMPTY;
 	this->Pattern = 0;
-	this->Position = Vector3(DirectX::Size.X / 2.0f, DirectX::Size.Y / 2.0f, 0.5f);
+	this->Position = Vector3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.5f);
 	this->Scale = Vector2(1.0f, 1.0f);
 	this->Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	this->Mirror = Bool2(false, false);
@@ -97,10 +98,11 @@ Object::Object(void)
 	this->Size = Vector2(1.0f, 1.0f);
 	this->Timer = 0;
 	this->Limit.Type = LIMIT_NONE;
-	this->Limit.Position = Vector3(0, 0, 0);
-	this->Limit.Size = Vector2(0, 0);
+	this->Limit.Position = Vector3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f);
+	this->Limit.Size = Vector2(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f);
 	this->HitBox.Type = HITBOX_NONE;
 	this->HitBox.Scale = Vector2(0.6f, 0.6f);
+	this->Gravity = 0.0f;
 }
 
 Object::~Object(void)
@@ -144,6 +146,9 @@ void Object::UpdateThis(void)
 		this->Size = this->Scale;
 		break;
 	}
+
+	//d—Í
+	this->UpdatePosition(Vector3(0.0f, this->Gravity, 0.0f));
 
 	//Šµ«
 	this->Position.x += this->Inertia.v3.x;

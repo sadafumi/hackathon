@@ -42,12 +42,6 @@
     <ClInclude Include="Lib\texture.h">
       <Filter>ライブラリ</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>フラ</Filter>
-    </ClInclude>
-    <ClInclude Include="Header.h">
-      <Filter>佐々木</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Lib\core.cpp">
@@ -70,9 +64,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>メイン</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>フラ</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
